@@ -1,20 +1,20 @@
 package org.acme.spsp.service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.acme.spsp.entity.Household;
-import org.acme.spsp.repositiory.HouseholdRepository;
-import org.springframework.stereotype.Service;
+import org.acme.spsp.service.exceptions.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface HouseholdService {
 
-    Household findByEircode(String eircode);
+    Household findByEircode(String eircode) throws NotFoundException;
 
     Household findByEircodeWithPets(String eircode);
 
     List<Household> findAllByPetsEmpty();
+
+    List<Household> findAll();
+
+    void deleteByEircode(String eircode) throws NotFoundException;
 }

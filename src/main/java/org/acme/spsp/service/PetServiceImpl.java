@@ -1,45 +1,48 @@
 package org.acme.spsp.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.acme.spsp.entity.Pet;
-import org.acme.spsp.repositiory.Daos.NameBreedTypePet;
+import org.acme.spsp.repositiory.dtos.NameBreedTypePet;
 import org.acme.spsp.repositiory.PetRepository;
+import org.acme.spsp.service.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @Slf4j
-public class PetServiceImpl implements PetServiceInterface {
+@AllArgsConstructor
+public class PetServiceImpl implements PetService {
     private PetRepository petRepository;
 
     @Override
-    public void createPet(Pet pet) {
-        petRepository.save(pet);
+    public Pet createPet(Pet pet) {
+
+        return petRepository.save(pet);
     }
 
     @Override
-    public List<Pet> getAllPets() {
+    public List<Pet> findAllPets() {
         return petRepository.findAll();
     }
 
     @Override
-    public Pet getPetById(int id) {
-        return petRepository.getReferenceById(id);
+    public Pet findPetById(int id) throws NotFoundException {
+        return petRepository.findById(id).orElseThrow(() -> new NotFoundException("Pet with ID " + id + " not found"));
     }
 
     @Override
     public void deletePet(int id) {
-        petRepository.deletePetById(id);
+        petRepository.deleteById(id);
     }
 
     @Override
-    public void updatePet(Pet pet) {
-        if (petRepository.getReferenceById(pet.getId()) == null) {
-            log.error("Pet with id {} not found", pet.getId());
-        } else {
-            petRepository.save(pet);
+    public void updatePet(Pet pet) throws NotFoundException {
+        if(!petRepository.existsById(pet.getId())) {
+            throw new NotFoundException("Could not update! Pet with ID " + pet.getId() + " not found");
         }
+        petRepository.save(pet);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class PetServiceImpl implements PetServiceInterface {
         List<Pet> pets = petRepository.findAll();
         int count = pets.size();
         int maxAge = petRepository.findMaxAge();
-
+        //todo finish this
         return "";
     }
 }
