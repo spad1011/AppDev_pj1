@@ -44,9 +44,14 @@ public class HouseholdServiceImpl implements HouseholdService {
     @Override
     public void deleteByEircode(String eircode) throws NotFoundException {
         log.info("deleteByEircode {}", eircode);
-        if(!householdRepository.existsById(eircode)) {
-            throw new NotFoundException("Household with EIERCODE " + eircode+ "nicht gefunden");
+        if (!householdRepository.existsById(eircode)) {
+            throw new NotFoundException("Household with EIERCODE " + eircode + "nicht gefunden");
         }
         householdRepository.deleteById(eircode);
+    }
+
+    @Override
+    public Household createHousehold(Household household) {
+        return householdRepository.save(household);
     }
 }

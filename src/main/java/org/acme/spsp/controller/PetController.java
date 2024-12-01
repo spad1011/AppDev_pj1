@@ -48,4 +48,9 @@ public class PetController {
         return petService.createPet(pet);
     }
 
+    @GetMapping("/{type}")
+    public List<Pet> getAllPetsByType(@PathVariable("type") String type){
+        return petService.getPetsByType(type);
+    }
+
 }

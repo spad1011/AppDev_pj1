@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS pets(
                       animal_type VARCHAR(255) NOT NULL,
                       breed VARCHAR(255) NOT NULL,
                       age INT NOT NULL,
-                    household_fk VARCHAR(8) REFERENCES household NOT NULL
+                      household_fk VARCHAR(8) REFERENCES household NOT NULL
 );

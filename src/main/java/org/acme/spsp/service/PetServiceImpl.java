@@ -9,6 +9,7 @@ import org.acme.spsp.service.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Slf4j
@@ -39,7 +40,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public void updatePet(Pet pet) throws NotFoundException {
-        if(!petRepository.existsById(pet.getId())) {
+        if (!petRepository.existsById(pet.getId())) {
             throw new NotFoundException("Could not update! Pet with ID " + pet.getId() + " not found");
         }
         petRepository.save(pet);
@@ -72,7 +73,8 @@ public class PetServiceImpl implements PetService {
         List<Pet> pets = petRepository.findAll();
         int count = pets.size();
         int maxAge = petRepository.findMaxAge();
-        //todo finish this
-        return "";
+        AtomicInteger averageAge = new AtomicInteger();
+        pets.forEach(pet -> averageAge.addAndGet(pet.getAge()));
+        return ("Statistics: entries, maxAge, averageAge " + count + " " + maxAge + " " + averageAge);
     }
 }

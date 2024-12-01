@@ -1,0 +1,48 @@
+# Household Type Definition
+type Household {
+    eircode: String!            # Primary key, uniquely identifies a Household
+    numberOfOccupants: Int!     # Number of people living in the household
+    maxNumberOfOccupants: Int!  # Maximum allowed number of occupants
+    ownerOccupied: Boolean!     # Whether the household is owner-occupied
+    #pets: [Pet]                 # List of pets belonging to this household
+}
+
+# Pet Type Definition
+type Pet {
+    id: Int!                    # Unique ID for each pet
+    name: String!               # Name of the pet
+    animalType: String!         # Type of animal (e.g., dog, cat)
+    breed: String!              # Breed of the pet
+    age: Int!                   # Age of the pet
+    household: Household!       # Reference to the household the pet belongs to
+}
+
+type Query {
+    petById(petId: Int!): Pet
+    findAllPets: [Pet]
+    findAllPetsByType(type: String!): [Pet]
+    householdByEircode(eircode: String!): Household
+    petStatistics: String
+}
+
+input petInput{
+    name: String!,
+    animalType: String!,
+    breed: String!,
+    age: Int!,
+    household: String
+}
+
+input householdInput{
+    eircode: String!,
+    numberOfOccupants: Int!,
+    maxNumberOfOccupants: Int!,
+    ownerOccupied: Boolean!
+}
+
+type Mutation {
+    deletePet(petId: Int!): Int,
+    createPet(pet: petInput!):Pet
+    deleteHousehold(eircode: String!): String,
+    createHousehold(household: householdInput!): Household
+}

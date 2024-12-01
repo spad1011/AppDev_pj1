@@ -4,32 +4,42 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
 
 @Entity
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Household {
 
-    public static final String EIRCODE_PATTERN = "[ACDEFHKNPRTVWXY]\\d[0-9W][ \\-]?[0-9ACDEFHKNPRTVWXY]{4}/";
+    public static final String EIRCODE_PATTERN = ".*";
 
     @Pattern(regexp = EIRCODE_PATTERN)
     @Id
     String eircode;
 
     @NotNull
-    Integer numberOfOccupants;
+    int numberOfOccupants;
 
     @NotNull
-    Integer maxNumberOfOccupants;
+    int maxNumberOfOccupants;
 
     @NotNull
-    Boolean ownerOccupied;
+    boolean ownerOccupied;
 
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "household", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Pet> pets;
 
+    public Household(String eircode, int numberOfOccupants, int maxNumberOfOccupants, boolean ownerOccupied) {
+        this.eircode = eircode;
+        this.numberOfOccupants = numberOfOccupants;
+        this.maxNumberOfOccupants = maxNumberOfOccupants;
+        this.ownerOccupied = ownerOccupied;
+    }
 }
