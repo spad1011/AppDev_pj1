@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.acme.spsp.entity.Pet;
 import org.acme.spsp.repositiory.dtos.NameBreedTypePet;
 import org.acme.spsp.repositiory.PetRepository;
+import org.acme.spsp.service.exceptions.BadDataException;
 import org.acme.spsp.service.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,10 @@ public class PetServiceImpl implements PetService {
     private PetRepository petRepository;
 
     @Override
-    public Pet createPet(Pet pet) {
-
+    public Pet createPet(Pet pet) throws BadDataException {
+        if(pet.getHousehold() == null) {
+            throw new BadDataException("A pet has to have a Household.");
+        }
         return petRepository.save(pet);
     }
 

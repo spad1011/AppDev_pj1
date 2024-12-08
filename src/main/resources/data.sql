@@ -25,4 +25,22 @@ INSERT INTO pets (name, animal_type, breed, age, household_fk) VALUES ('Goldie',
 INSERT INTO pets (name, animal_type, breed, age, household_fk) VALUES ('Polly', 'Bird', 'Parakeet', 2, 'D02XY45');
 INSERT INTO pets (name, animal_type, breed, age, household_fk) VALUES ('Max', 'Dog', 'German Shepherd', 5, 'D02XY45');
 INSERT INTO pets (name, animal_type, breed, age, household_fk) VALUES ('Luna', 'Cat', 'Maine Coon', 3, 'D02XY45');
-INSERT INTO pets (name, animal_type, breed, age, household_fk) VALUES ('Nibbles', 'Hamster', 'Syrian Hamster', 1, 'D02XY45')
+INSERT INTO pets (name, animal_type, breed, age, household_fk) VALUES ('Nibbles', 'Hamster', 'Syrian Hamster', 1, 'D02XY45');
+
+-- Insert example users into the uzers table
+INSERT INTO uzers (
+    email,
+    password,
+    first_name,
+    last_name,
+    role,
+    enabled,
+    account_non_expired,
+    credentials_non_expired,
+    account_non_locked
+) VALUES
+      ('john.doe@example.com', '$2a$10$wjhZKGnlO1DTmTvWW/BiDe4IyoLA/tPZbgnE2fh1oVI1e//wKukgu', 'John', 'Doe', 'ROLE_USER', TRUE, TRUE, TRUE, TRUE), --pw:password123
+      ('jane.smith@example.com', '$2a$10$qXm.GBGxgoNYzkX8fwIZ9u6OW8m5oWFcW1DM/6KPAlb65nQwuB9KK', 'Jane', 'Smith', 'ROLE_ADMIN', TRUE, TRUE, TRUE, TRUE), --pw:password456
+      ('alice.brown@example.com', '$2a$10$wjhZKGnlO1DTmTvWW/BiDe4IyoLA/tPZbgnE2fh1oVI1e//wKukgu', 'Alice', 'Brown', 'ROLE_USER', TRUE, TRUE, TRUE, TRUE),
+      ('bob.jones@example.com', '$2a$10$qXm.GBGxgoNYzkX8fwIZ9u6OW8m5oWFcW1DM/6KPAlb65nQwuB9KK', 'Bob', 'Jones', 'ROLE_USER', TRUE, TRUE, TRUE, TRUE),
+      ('charlie.davis@example.com', '$2a$10$wjhZKGnlO1DTmTvWW/BiDe4IyoLA/tPZbgnE2fh1oVI1e//wKukgu', 'Charlie', 'Davis', 'ROLE_USER', FALSE, TRUE, TRUE, TRUE);

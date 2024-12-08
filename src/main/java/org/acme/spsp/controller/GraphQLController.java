@@ -12,13 +12,14 @@ import org.acme.spsp.service.exceptions.NotFoundException;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class PetQueryController {
+public class GraphQLController {
     private PetService petService;
     private HouseholdService householdService;
 
@@ -47,12 +48,14 @@ public class PetQueryController {
         return petService.getPetStatistics();
     }
 
+    @Secured(value = "ROLE_ADMIN")
     @MutationMapping
     int deletePet(@Argument("petId") int id) {
         petService.deletePet(id);
         return 1;
     }
 
+    @Secured(value = "ROLE_ADMIN")
     @MutationMapping
     Pet createPet(@Valid @Argument("pet") PetDTO petDTO) throws NotFoundException {
         Household household = null;
@@ -63,12 +66,14 @@ public class PetQueryController {
         return petService.createPet(pet);
     }
 
+    @Secured(value = "ROLE_ADMIN")
     @MutationMapping
     String deleteHousehold(@Argument("eircode") String eircode) throws NotFoundException {
         householdService.deleteByEircode(eircode);
         return "Deleted";
     }
 
+    @Secured(value = "ROLE_ADMIN")
     @MutationMapping
     Household createHousehold( @Argument("household") HouseholdDTO householdDTO) {
         Household household = new Household(householdDTO.eircode(), householdDTO.numberOfOccupants(),
